@@ -3,6 +3,7 @@
 /*                                         Version 2.01  */
 
 #include "ui/ui.h"
+#include <cstdio>
 
 busy_flagger::busy_flagger(busy_flag & _flag) :
 	flag(_flag) {
@@ -77,7 +78,7 @@ void feb_thread::operator()() {
 	sigaddset(&set, SIGALRM);
 
 	if (SignalProcmask(0, 0, SIG_BLOCK, &set, NULL) == -1) {
-		perror("SignalProcmask(edp_irp6p_tid)");
+		std::perror("SignalProcmask(edp_irp6p_tid)");
 	}
 #endif
 

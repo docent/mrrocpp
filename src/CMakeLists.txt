@@ -56,10 +56,12 @@ option(USE_MESSIP "Use MESSIP TCP messaging protocol" OFF)
 # QNX is default MRROC++ target
 if (QNXNTO)
 	# QNX headers and libraries are kept in 'mrlib' repository
-	set(MRLIB "$ENV{QNX_TARGET}/mrlib")
+	#set(MRLIB "/home/docent/devel/mrlib")
+	set(MRLIB $ENV{QNX_TARGET}/mrlib)
 
 	# keep this flag until bug in QNX stack alignment is fixed
-	add_definitions (-DEIGEN_DONT_ALIGN)	
+	add_definitions (-DEIGEN_DONT_ALIGN)
+	add_definitions (-V4.4.2,gcc_ntox86_gpp)		
 	set(EIGEN2_INCLUDE_DIR "${MRLIB}/include/eigen2") 
 	set(LIBXML2_INCLUDE_DIR "${MRLIB}/include")
 	set(Boost_INCLUDE_DIR "${MRLIB}/include")
@@ -68,10 +70,11 @@ if (QNXNTO)
 	set(BOOST_ROOT "${MRLIB}")
 	find_package(Boost 1.39 COMPONENTS thread serialization)
 	# include boost compatibility layer
-	include_directories ("${Boost_INCLUDE_DIRS}/boost/compatibility/cpp_c_headers") 
+	# include_directories ("${Boost_INCLUDE_DIRS}/boost/compatibility/cpp_c_headers") 
 
 	# FIXME: define libxml2 libraries to use
 	find_library(LIBXML2_LIBRARY xml2 "${MRLIB}/lib")
+	message(dupa "${MRLIB}/lib")
 	find_library(LIBICONV_LIBRARY iconv "${MRLIB}/lib")
 	set(LIBXML2_LIBRARIES ${LIBXML2_LIBRARY} ${LIBICONV_LIBRARY})
 	
@@ -109,7 +112,7 @@ if(USE_MESSIP)
 endif(USE_MESSIP)
 
 set(COMMON_LIBRARIES mrrocpp ${COMMON_LIBRARIES}
-	${Boost_THREAD_LIBRARY}
+	boost_thread-mt-1_39
 	${COMPATIBILITY_LIBRARIES}
 )
 

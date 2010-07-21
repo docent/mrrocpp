@@ -5,6 +5,10 @@ SET(CMAKE_SYSTEM_NAME QNX)
 #this one not so much
 SET(CMAKE_SYSTEM_VERSION 6.4.1)
 
+SET(CMAKE_EXE_LINKER_FLAGS "-V4.4.2,gcc_ntox86_gpp  -L/home/docent/devel/qnx_target/mrlib/lib")
+SET(CMAKE_SHARED_LINKER_FLAGS "-V4.4.2,gcc_ntox86_gpp -L/home/docent/devel/qnx_target/mrlib/lib")
+SET(CMAKE_MODULE_LINKER_FLAGS "-V4.4.2,gcc_ntox86_gpp  -L/home/docent/devel/qnx_target/mrlib/lib")
+
 # specify the cross compiler
 if(CMAKE_HOST_WIN32)
 SET(CMAKE_C_COMPILER   "$ENV{QNX_HOST}/usr/bin/qcc.exe")
@@ -66,6 +70,6 @@ set(CMAKE_CXX_FLAGS "-w9 -Wpointer-arith -Wwrite-strings -Wno-sign-compare -O1")
 #ENDFOREACH(type)
 ## force the language to be c++ since qnx only has gcc and not g++ and c++?
 #SET(CMAKE_CXX_COMPILE_OBJECT
-#  "<CMAKE_CXX_COMPILER> -x c++ <DEFINES> <FLAGS> -o <OBJECT> -c <SOURCE>")
+#  "<CMAKE_CXX_COMPILER> <DEFINES> <FLAGS> -o <OBJECT> -c <SOURCE>")
 #
 #INCLUDE(Platform/UnixPaths)

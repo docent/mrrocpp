@@ -5,6 +5,8 @@
 #include <boost/serialization/string.hpp>
 #include <boost/thread/locks.hpp>
 
+#include <cstdio>
+
 #include "lib/messip/messip.h"
 #include "lib/xdr/xdr_iarchive.hpp"
 
@@ -75,18 +77,18 @@ Agent::~Agent()
 
 	// cancel the thread
 	if(pthread_cancel(tid.native_handle()) != 0) {
-		fprintf(stderr, "pthread_cancel() failed\n");
+		std::fprintf(stderr, "pthread_cancel() failed\n");
 	}
 
 	// wait after finishing
 	void *retval;
 	if(pthread_join(tid.native_handle(), &retval) != 0) {
-		fprintf(stderr, "pthread_join() failed\n");
+		std::fprintf(stderr, "pthread_join() failed\n");
 	}
 
 	// check if thread was properly cancelled
 	if(retval != PTHREAD_CANCELED) {
-		fprintf(stderr, "retval != PTHREAD_CANCELED\n");
+		std::fprintf(stderr, "retval != PTHREAD_CANCELED\n");
 	}
 #endif
 

@@ -7,6 +7,8 @@
 
 #include "bang_bang_profile.h"
 
+#include <cstdio>
+
 namespace mrrocpp {
 namespace ecp {
 namespace common {
@@ -472,7 +474,7 @@ bool bang_bang_profile::set_model(vector<ecp_mp::common::trajectory_pose::bang_b
 			   && it->v_k[i] < it->v_r[i]) {
 		it-> model[i] = 4;
 	} else {
-		printf("###################### undetermined model #######################");
+		//printf("###################### undetermined model #######################");
 		it->model[i] = -1;
 		return false;
 	}

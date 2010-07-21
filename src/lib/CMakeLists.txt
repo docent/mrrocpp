@@ -7,7 +7,7 @@ if(USE_MESSIP)
 	install(TARGETS configsrv DESTINATION bin)
 endif(USE_MESSIP)
 
-add_subdirectory (agent)
+#add_subdirectory (agent)
 
 # Create a library called "mrrocpp" which includes the source file "hello.cxx".
 # The extension is already found. Any number of sources could be listed here. 

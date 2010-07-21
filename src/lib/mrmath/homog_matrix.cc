@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdio.h>
+#include <iostream>
 #include <ostream>
 
 #include "lib/mis_fun.h"
@@ -7,6 +8,8 @@
 
 namespace mrrocpp {
 namespace lib {
+
+using std::ios;
 
 // ******************************************************************************************
 //                                     definicje skladowych klasy Homog_matrix
