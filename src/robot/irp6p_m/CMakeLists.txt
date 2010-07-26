@@ -16,7 +16,7 @@ target_link_libraries(
 if(QNXNTO)
 target_link_libraries(
 	edp_irp6p_m
-	ati6284
+	ati6284KT
 )
 endif(QNXNTO)
 	

@@ -1,4 +1,9 @@
 # TODO: remove these utility macros to separate file
+
+SET(CMAKE_EXE_LINKER_FLAGS "-V4.4.2,gcc_ntox86_gpp  -L/home/docent/devel/qnx_target/mrlib/lib")
+SET(CMAKE_SHARED_LINKER_FLAGS "-V4.4.2,gcc_ntox86_gpp -L/home/docent/devel/qnx_target/mrlib/lib")
+SET(CMAKE_MODULE_LINKER_FLAGS "-V4.4.2,gcc_ntox86_gpp  -L/home/docent/devel/qnx_target/mrlib/lib")
+
 MACRO(TARGET_LINK_LIBRARY_IF CONDITION TARGET LIBRARY)
 	set(CONDITION_VALUE ${${CONDITION}})
 	if(CONDITION_VALUE)
@@ -57,7 +62,8 @@ option(USE_MESSIP "Use MESSIP TCP messaging protocol" OFF)
 if (QNXNTO)
 	# QNX headers and libraries are kept in 'mrlib' repository
 	#set(MRLIB "/home/docent/devel/mrlib")
-	set(MRLIB $ENV{QNX_TARGET}/mrlib)
+	set(QNX_TARGET /home/docent/devel/qnx_target)
+	set(MRLIB ${QNX_TARGET}/mrlib)
 
 	# keep this flag until bug in QNX stack alignment is fixed
 	add_definitions (-DEIGEN_DONT_ALIGN)
@@ -68,7 +74,7 @@ if (QNXNTO)
 
 	# Boost is provided by mrlib repository
 	set(BOOST_ROOT "${MRLIB}")
-	find_package(Boost 1.39 COMPONENTS thread serialization)
+	find_package(Boost 1.43 COMPONENTS thread serialization)
 	# include boost compatibility layer
 	# include_directories ("${Boost_INCLUDE_DIRS}/boost/compatibility/cpp_c_headers") 
 
@@ -82,7 +88,7 @@ if (QNXNTO)
 	set (COMPATIBILITY_LIBRARIES socket m)
 else (QNXNTO) # Linux, etc.
 	# find dependency packages
-	find_package(Boost 1.39 COMPONENTS thread serialization)
+	find_package(Boost 1.43 COMPONENTS thread serialization)
 	find_package(Threads REQUIRED)
 	find_package(LibXml2 REQUIRED)
 
@@ -112,7 +118,7 @@ if(USE_MESSIP)
 endif(USE_MESSIP)
 
 set(COMMON_LIBRARIES mrrocpp ${COMMON_LIBRARIES}
-	boost_thread-mt-1_39
+	boost_thread-mt-1_43
 	${COMPATIBILITY_LIBRARIES}
 )
 

@@ -97,7 +97,7 @@ ATI6284_force::ATI6284_force(common::manip_effector &_master) :
 
 void ATI6284_force::connect_to_hardware(void)
 {
-	if (!(master.test_mode)) {
+	if (!(master.force_sensor_test_mode)) {
 		// 	printf("Konstruktor VSP!\n");
 
 		ThreadCtl(_NTO_TCTL_IO, NULL); // nadanie odpowiednich uprawnien watkowi
@@ -123,7 +123,7 @@ void ATI6284_force::connect_to_hardware(void)
 
 ATI6284_force::~ATI6284_force(void)
 {
-	if (!(master.test_mode)) {
+	if (!(master.force_sensor_test_mode)) {
 		//delete recvSocket;
 		//delete sendSocket;
 	}
@@ -140,7 +140,7 @@ void ATI6284_force::configure_sensor(void)
 	sr_msg->message("edp Sensor configured");
 
 
-	if (!(master.test_mode)) {
+	if (!(master.force_sensor_test_mode)) {
 
 
 
@@ -195,7 +195,7 @@ void ATI6284_force::configure_sensor(void)
 			//		master.config.value<double>("y_axis_arm"), master.config.return_double_value("z_axis_arm") };
 			lib::K_vector pointofgravity(point);
 			gravity_transformation
-					= new lib::ForceTrans(lib::FORCE_SENSOR_ATI6284, frame, sensor_frame, weight, pointofgravity);
+					= new lib::ForceTrans(lib::FORCE_SENSOR_ATI6284, frame, sensor_frame, weight, pointofgravity, is_right_turn_frame);
 
 		} else {
 			gravity_transformation->synchro(frame);
@@ -235,7 +235,7 @@ void ATI6284_force::initiate_reading(void)
 	short measure_report;
 
 	if (!is_sensor_configured) {
-		throw sensor_error(lib::FATAL_ERROR, SENSOR_NOT_CONFIGURED);
+		throw lib::sensor::sensor_error(lib::FATAL_ERROR, SENSOR_NOT_CONFIGURED);
     }
 
     lib::Ft_vector ft_table;
