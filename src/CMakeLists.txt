@@ -119,6 +119,7 @@ endif(USE_MESSIP)
 
 set(COMMON_LIBRARIES mrrocpp ${COMMON_LIBRARIES}
 	boost_thread-mt-1_43
+	boost_system-mt-1_43
 	${COMPATIBILITY_LIBRARIES}
 )
 

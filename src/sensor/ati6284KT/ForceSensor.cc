@@ -1,6 +1,9 @@
 #include "RawSocket.h"
 #include "ForceSensor.h"
 #include <stdexcept>
+#include <cstdio>
+#include <sys/neutrino.h>
+#include <sys/trace.h>
 
 namespace mrrocpp {
 namespace edp {
@@ -41,8 +44,8 @@ ForceSensor6284::AdcReadings_t ForceSensor6284::getAdcReadings(boost::posix_time
 
 void ForceSensor6284::receiveThread() {
     while (true) {
-    	uint8_t localRecvBuf[1024];
     	std::size_t bytesReceived = socket_.recv(recvBuf_, sizeof(recvBuf_));
+    	trace_logi(_NTO_TRACE_USERFIRST + 1, 2, 2);
         if (bytesReceived == 0) {
             break;
         }
@@ -53,7 +56,7 @@ void ForceSensor6284::receiveThread() {
             boost::lock_guard<boost::mutex> lock(responseReceivedMt_);
 
             // copy values to shared data
-            std::memcpy(recvBuf_, localRecvBuf, bytesReceived);
+            //std::memcpy(recvBuf_, localRecvBuf, bytesReceived);
             responseSize_ = bytesReceived;
 
             // notify the waiting thread

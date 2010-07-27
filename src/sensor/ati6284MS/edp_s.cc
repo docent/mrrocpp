@@ -211,7 +211,7 @@ void ATI6284_force::wait_for_event()
     //TODO: Jesli test mode, dopuszczac wylaczenie sensora
 
     iter_counter++;
-    usleep(200);
+    usleep(300);
     service.GetGenGForceReading(&rpcController, NULL, &response, NULL);
     if (rpcController.expired()) {
         printf("Expired!!!\n");

@@ -36,6 +36,7 @@
 #include <sys/mman.h>
 #include <time.h>
 #include <fstream>
+#include <signal.h>
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/bind.hpp>
@@ -49,6 +50,7 @@
 
 #include <sys/syspage.h>
 #include <sys/neutrino.h>
+#include <sys/trace.h>
 
 // Konfigurator
 #include "lib/configurator.h"
@@ -224,19 +226,21 @@ void ATI6284_force::wait_for_event()
 
 	iter_counter++;
 	if (iter_counter % 2000 == 0) {
-		//printf("Measures per sec = %d\n", timeUtil.mps());
+		printf("Measures per sec = %d\n", timeUtil.mps());
 	}
 
 	timeUtil.wait(1000);
 	timeUtil.probeDelayCycle();
-	if (measuring) {
+	//if (measuring) {
 		timeUtil.startMeasurement();
-	}
+	//}
 
+    trace_logi(_NTO_TRACE_USERFIRST, 1, 1);
 	ForceSensor6284::AdcReadings_t readings = sensor_.getAdcReadings(timeout);
-	if (measuring) {
+    trace_logi(_NTO_TRACE_USERFIRST + 2, 3, 2);
+	//if (measuring) {
 		timeUtil.stopMeasurement();
-	}
+	//}
 	if (readings.timeout) {
 		printf("Expired!!!\n");
 	} else {
@@ -266,6 +270,7 @@ void ATI6284_force::initiate_reading(void)
 	for (int i = 0; i < 6; ++i) {
 		ft_table[i] = force_fresh[i];
 	}
+
 
 	is_reading_ready = true;
 
